@@ -67,7 +67,7 @@
 
         function play(){
             console.log("clicked start");
-            player.seekTo(timeOfInterest-2,true);
+            player.seekTo(timeOfInterest-5,true);
             player.playVideo();
             var endVideo = setInterval(autoStopVideo,1000);
             Promise.all([
