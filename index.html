@@ -71,8 +71,8 @@
             player.playVideo();
             var endVideo = setInterval(autoStopVideo,1000);
             Promise.all([
-            faceapi.nets.tinyFaceDetector.loadFromUri('/'),
-            faceapi.nets.faceExpressionNet.loadFromUri('/')
+            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
             ]).then(record());
             
         }
