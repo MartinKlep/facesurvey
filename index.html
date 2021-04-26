@@ -112,6 +112,7 @@
             if (window.parent != window.top) {
                 const target = window.parent;
                 target.postMessage("IT WORKS","*");
+                console.log("SEND MESSAGE TO PARENT");
             }
         }
 
