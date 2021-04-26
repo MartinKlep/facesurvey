@@ -99,7 +99,6 @@
                 clearInterval(checker);
                 clearInterval(rec);
                 data.forEach(function(item){ 
-                    console.log("TESTY: " + item[0]);
                     if(item[0] >= timeOfInterest-2 && item[0] <= timeOfInterest+2){
                         relevantData.push(item);
                      }
@@ -112,12 +111,8 @@
         
 
         async function doStuff(){
-            console.log("doing stuff at " + player.getCurrentTime() + " seconds");     //message for the console
-
-            //const [track] = stream.getVideoTracks();
-             // get a single frame from the webcam feed                                                
-        //    const imageCapture = new ImageCapture(track);
-          /*  const inputImg = await imageCapture.grabFrame(); */
+            const timestamp = player.getCurrentTime();
+            console.log("doing stuff at " +timestamp + " seconds");     //message for the console
             
 
           const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128 });
@@ -127,7 +122,7 @@
             
             if(result){ // process detection result and save the data
                 const expressionArray = result.expressions.asSortedArray();
-                const timestamp = player.getCurrentTime();
+                
                 var exString = JSON.stringify(expressionArray);
                 newData = [timestamp,exString];
                 data.push(newData);
