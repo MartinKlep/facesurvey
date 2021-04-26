@@ -128,8 +128,7 @@
                 const expressionArray = result.expressions.asSortedArray();
                 const timestamp = player.getCurrentTime();
                 var exString = JSON.stringify(expressionArray);
-                console.log("Stringify test: " +exString);
-                newData = [timestamp,expressionArray];
+                newData = [timestamp,exString];
                 data.push(newData);
             } 
         }  
