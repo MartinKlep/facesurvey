@@ -99,6 +99,7 @@
                 clearInterval(checker);
                 clearInterval(rec);
                 data.forEach(function(item){ 
+                    console.log("TESTY: " + item[0]);
                     if(item[0] >= timeOfInterest-2 && item[0] <= timeOfInterest+2){
                         relevantData.push(item);
                      }
