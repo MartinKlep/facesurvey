@@ -101,7 +101,6 @@
                 data.forEach(function(item){ 
                     var min = timeOfInterest - 2;
                     var max = timeOfInterest + 2;
-                    console.log("" + item[0] + ">= " + min  + " && " + item[0] + " <= " +  max + " is: " + (item[0] >= min && item[0] <= max) + " " );
                     if(item[0] >= min && item[0] <= max){
                         relevantData.push(item);
                      }
