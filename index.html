@@ -127,6 +127,8 @@
             if(result){ // process detection result and save the data
                 const expressionArray = result.expressions.asSortedArray();
                 const timestamp = player.getCurrentTime();
+                var exString = JSON.stringify(expressionArray);
+                console.log("Stringify test: " +exString);
                 newData = [timestamp,expressionArray];
                 data.push(newData);
             } 
