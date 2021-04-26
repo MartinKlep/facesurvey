@@ -94,6 +94,13 @@
             checker = setInterval(checktime,100); 
         }
 
+        function sendData(){    // send data to survey
+                var target = window.parent;
+                var message = "IT WORKS"
+                target.postMessage(message,"*");
+                console.log("SEND MESSAGE TO PARENT");  
+        }
+
         function checktime(){
           if(player.getCurrentTime() >= timeOfInterest+3 ) {
                 clearInterval(checker);
@@ -101,6 +108,7 @@
                 data.forEach(function(item){ 
                     if(item[0] >= timeOfInterest-4 && item[0] <= timeOfInterest+2){
                         relevantData.push(item);
+                        console.log("TESTESTEST");
                         sendData();
                      }
                 });
@@ -108,11 +116,7 @@
                 }
         }   
 
-        function sendData(){    // send data to survey
-                const target = window.parent;
-                target.postMessage("IT WORKS","*");
-                console.log("SEND MESSAGE TO PARENT");  
-        }
+        
 
         async function doStuff(){
             console.log("doing stuff at " + player.getCurrentTime() + " seconds");     //message for the console
