@@ -101,6 +101,7 @@
                 data.forEach(function(item){ 
                     if(item[0] >= timeOfInterest-4 && item[0] <= timeOfInterest+2){
                         relevantData.push(item);
+                        sendData();
                      }
                 });
                     console.log(data);
@@ -111,7 +112,7 @@
             if (window.parent != window.top) {
                 const target = window.parent;
                 target.postMessage("IT WORKS","*");
-
+            }
         }
 
         async function doStuff(){
