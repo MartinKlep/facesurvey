@@ -28,7 +28,7 @@
     <body style="background-color:white;">
         <title>Face Survey Test</title>
         <p>
-            Test version 28-04-2021 02:47
+            Test version 28-04-2021 03:27
         </p>
 
         <noscript>
@@ -97,6 +97,46 @@
             checker = setInterval(checktime,100); 
         }
 
+        function faceexToNumber(faceex){
+            var number;
+
+            switch (faceex){
+
+                case "neutral":
+                    number = 0;
+                    break;
+
+                case "happy":
+                    number = 1;
+                    break;                    
+                
+                case "sad":
+                    number = 2;
+                    break; 
+
+                case "angry":
+                    number = 3;
+                    break; 
+
+                case "fearful":
+                    number = 4;
+                    break; 
+
+                case "disgusted":
+                    number = 5;
+                    break; 
+
+                case "surprised":
+                    number = 6;
+                    break; 
+
+                default:
+                    console.log("default in switch case faceexToNumber");   // should not happen 
+            }
+
+            return number;
+        }
+
         function sendData(){    // send data to survey
                 var target = window.parent;
                 var relevantData = [];
@@ -117,11 +157,29 @@
                 console.log(relevantData[0][0]);
                 var tridecimals = Number.parseFloat(relevantData[0][0]).toFixed(3);
                 console.log(tridecimals);
+                console.log("-_-_--_-_-_-__-_-_-_-_-_-_--_-__--__-_-__-_-__");
 
-                var message = relevantData;
+                var msgdata = [];
+                relevantData.forEach(function(i){
+                    var trimtime = i[0];
+                    trimtime = Number.parseFloat(trimtime).toFixed(3);
+                    var tempdata = i[1];
+                    var trimmdata = [];
+                    tempdata.forEach(function(j){
+                        var newFaceEx = faceexToNumber(tempdata[j].expression);
+                        var newProb = tempdata[j].probability;
+                        newProb = Number.parseFloat(newProb).toFixed(3);
+                        trimdata[j].push(newFaceEx);
+                        trimdata[j].push(newProb);
+                    });
+                    var temparray = [trimtime,trimdata];
+                    msgdata.push(temparray);
+                });
+
+                var message = msgdata;
                 target.postMessage(message,"*");
-                console.log(relevantData);
-                console.log("SEND MESSAGE TO PARENT"); 
+                console.log(msgdata);
+                console.log("SENT MESSAGE TO PARENT"); 
         }
 
         function checktime(){
