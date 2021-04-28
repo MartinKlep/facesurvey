@@ -28,7 +28,7 @@
     <body style="background-color:white;">
         <title>Face Survey Test</title>
         <p>
-            Test version 28-04-2021 04:29
+            Test version 28-04-2021 04:40
         </p>
 
         <noscript>
@@ -149,19 +149,6 @@
                      }
                 });
 
-                var testObject = relevantData[0][1][0];
-
-                console.log(testObject);
-                console.log(testObject.expression);
-                console.log(testObject.probability);
-                console.log(relevantData[0][0]);
-                var tridecimals = relevantData[0][0].toFixed(3);
-                console.log(tridecimals);
-                console.log("-_-_--_-_-_-__-_-_-_-_-_-_--_-__--__-_-__-_-__");
-                console.log(relevantData[0][1]);
-                console.log("-_-_--_-_-_-__-_-_-_-_-_-_--_-__--__-_-__-_-__");
-
-
                 var msgdata = [];
 
                 relevantData.forEach(function(i){
@@ -181,7 +168,7 @@
                     msgdata.push(temparray);
                 });
                 console.log(msgdata);
-                var message = msgdata;
+                var message = JSON.stringify(msgdata); 
                 target.postMessage(message,"*");
                 console.log("SENT MESSAGE TO PARENT"); 
         }
