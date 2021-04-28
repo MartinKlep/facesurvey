@@ -69,6 +69,7 @@
         var endVideo;
 
         function play(){
+            this.style.backgroundColor = "grey";
             console.log("clicked start");
             player.seekTo(timeOfInterest-5,true);
             player.playVideo();
