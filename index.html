@@ -28,7 +28,7 @@
     <body style="background-color:white;">
         <title>Face Survey Test</title>
         <p>
-            Test version 28-04-2021 03:34
+            Test version 28-04-2021 03:42
         </p>
 
         <noscript>
@@ -161,16 +161,20 @@
                 console.log(relevantData[0][1]);
                 console.log("-_-_--_-_-_-__-_-_-_-_-_-_--_-__--__-_-__-_-__");
 
+
                 var msgdata = [];
 
                 relevantData.forEach(function(i){
                     var trimtime = i[0];
                     trimtime = Number.parseFloat(trimtime).toFixed(3);
                     var tempdata = i[1];
+                    console.log(tempdata);
                     var trimmdata = [];
 
                     tempdata.forEach(function(j){
-                        var newFaceEx = faceexToNumber(tempdata[j].expression);
+                        console.log(tempdata[j]);
+                        var tempEx = tempdata[j].expression;
+                        var newFaceEx = faceexToNumber(tempEx);
                         var newProb = tempdata[j].probability;
                         newProb = Number.parseFloat(newProb).toFixed(3);
                         trimdata[j].push(newFaceEx);
