@@ -28,7 +28,7 @@
     <body style="background-color:white;">
         <title>Face Survey Test</title>
         <p>
-            Test version 28-04-2021 03:53
+            Test version 28-04-2021 03:58
         </p>
 
         <noscript>
@@ -170,21 +170,19 @@
                     var trimmdata = [];
                     console.log(i[1]);
                     i[1].forEach(function(j){
-                        console.log(j);
-                        var tempEx = i[1][j].expression;
+                        console.log(j, index);
+                        var tempEx = j.expression;
                         var newFaceEx = faceexToNumber(tempEx);
-                        var newProb = i[1][j].probability;
+                        var newProb = j.probability;
                         newProb = Number.parseFloat(newProb).toFixed(3);
-                        trimdata[j].push(newFaceEx);
-                        trimdata[j].push(newProb);
+                        trimdata[index].push([newFaceEx,newProb]);
                     });
                     var temparray = [trimtime,trimdata];
                     msgdata.push(temparray);
                 });
-
+                console.log(msgdata);
                 var message = msgdata;
                 target.postMessage(message,"*");
-                console.log(msgdata);
                 console.log("SENT MESSAGE TO PARENT"); 
         }
 
