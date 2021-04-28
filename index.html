@@ -28,7 +28,7 @@
     <body style="background-color:white;">
         <title>Face Survey Test</title>
         <p>
-            Test version 28-04-2021 02:45
+            Test version 28-04-2021 02:47
         </p>
 
         <noscript>
@@ -110,7 +110,10 @@
                 });
 
                 var testObject = relevantData[0][1][0];
+
                 console.log(testObject);
+                console.log(testObject.expression);
+                console.log(testObject.probability);
                 console.log(relevantData[0][0]);
                 var tridecimals = Number.parseFloat(relevantData[0][0]).toFixed(3);
                 console.log(tridecimals);
