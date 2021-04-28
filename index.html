@@ -155,7 +155,7 @@
                 console.log(testObject.expression);
                 console.log(testObject.probability);
                 console.log(relevantData[0][0]);
-                var tridecimals = Number.parseFloat(relevantData[0][0]).toFixed(3);
+                var tridecimals = relevantData[0][0].toFixed(3);
                 console.log(tridecimals);
                 console.log("-_-_--_-_-_-__-_-_-_-_-_-_--_-__--__-_-__-_-__");
                 console.log(relevantData[0][1]);
@@ -166,11 +166,9 @@
 
                 relevantData.forEach(function(i){
                     var trimtime = i[0];
-                    trimtime = Number.parseFloat(trimtime).toFixed(3);
+                    trimtime = trimtime.toFixed(3);
                     var trimdata = [];
-                    console.log(i[1]);
                     i[1].forEach(function(j){
-                        console.log(j);
                         var tempEx = j.expression;
                         var newFaceEx = faceexToNumber(tempEx);
                         var newProb = j.probability;
