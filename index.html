@@ -27,7 +27,9 @@
     </head>
     <body style="background-color:white;">
         <title>Face Survey Test</title>
-
+        <p>
+            Test version 28-04-2021 02:20
+        </p>
 
         <noscript>
             <p>
@@ -138,7 +140,7 @@
             
             if(result){ // process detection result and save the data
                 const expressionArray = result.expressions.asSortedArray();
-                newData = [timestamp,exString];
+                newData = [timestamp,expressionArray];
                 data.push(newData);
             } 
         }  
