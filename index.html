@@ -7,6 +7,10 @@
         <link rel="stylesheet" href="https://www.konstantinsteinle.de/soscisurvey/css/soscisurvey.css" />
         <style>
             
+            p{
+                color: red;
+            }
+            
             button {
             color: white;
             background-color: red;
@@ -25,12 +29,16 @@
         <title>Face Survey Test</title>
 
 
-        
+        <noscript>
+            <p>
+                Ihr Browser unterstützt keine scripts oder blockiert sie. Bitte schalten sie alle scriptblocker ab oder wechseln sie den Internetbrowser.
+            </p>
+
+        </noscript>
 
        <script>
         var player;
         var data = [];
-        var relevantData = [];
         const timeOfInterest = 16; // input interest time in seconds
         
         
@@ -71,7 +79,8 @@
         }
 
         function autoStopVideo(){
-            if(player.getCurrentTime() >= 20){
+            endtime = timeOfInterest + 5;
+            if(player.getCurrentTime() >= endtime){
                 player.stopVideo();
                 clearInterval(endVideo);
             }
@@ -81,7 +90,6 @@
         var rec;
       
         function record(){
-           
             console.log("recording");
             rec = setInterval(doStuff,20);
             checker = setInterval(checktime,100); 
@@ -89,24 +97,30 @@
 
         function sendData(){    // send data to survey
                 var target = window.parent;
-                var message = relevantData;
-                target.postMessage(message,"*");
-                console.log("SEND MESSAGE TO PARENT"); 
-        }
-
-        function checktime(){
-          if(player.getCurrentTime() >= timeOfInterest+3 ) {
-                clearInterval(checker);
-                clearInterval(rec);
+                var relevantData = [];
+                
                 data.forEach(function(item){ 
                     var min = timeOfInterest - 2;
-                    var max = timeOfInterest + 2;
+                    var max = timeOfInterest + 4;
                     if(item[0] >= min && item[0] <= max){
                         relevantData.push(item);
                      }
                 });
+
+                console.log(relevantData[0][1]);
+
+
+                var message = relevantData;
+                target.postMessage(message,"*");
+                console.log(relevantData);
+                console.log("SEND MESSAGE TO PARENT"); 
+        }
+
+        function checktime(){
+          if(player.getCurrentTime() >= timeOfInterest+5 ) {
+                clearInterval(checker);
+                clearInterval(rec);
                     sendData();
-                    console.log(relevantData);
                 }
         }   
 
@@ -124,8 +138,6 @@
             
             if(result){ // process detection result and save the data
                 const expressionArray = result.expressions.asSortedArray();
-                
-                var exString = JSON.stringify(expressionArray);
                 newData = [timestamp,exString];
                 data.push(newData);
             } 
