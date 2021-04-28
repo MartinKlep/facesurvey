@@ -158,13 +158,17 @@
                 var tridecimals = Number.parseFloat(relevantData[0][0]).toFixed(3);
                 console.log(tridecimals);
                 console.log("-_-_--_-_-_-__-_-_-_-_-_-_--_-__--__-_-__-_-__");
+                console.log(relevantData[0][1]);
+                console.log("-_-_--_-_-_-__-_-_-_-_-_-_--_-__--__-_-__-_-__");
 
                 var msgdata = [];
+
                 relevantData.forEach(function(i){
                     var trimtime = i[0];
                     trimtime = Number.parseFloat(trimtime).toFixed(3);
                     var tempdata = i[1];
                     var trimmdata = [];
+
                     tempdata.forEach(function(j){
                         var newFaceEx = faceexToNumber(tempdata[j].expression);
                         var newProb = tempdata[j].probability;
