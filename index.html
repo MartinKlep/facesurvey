@@ -28,7 +28,7 @@
     <body style="background-color:white;">
         <title>Face Survey Test</title>
         <p>
-            Test version 28-04-2021 04:40
+            Test version 28-04-2021 04:51
         </p>
 
         <noscript>
@@ -162,7 +162,10 @@
                         var newProb = j.probability;
                         newProb = newProb.toFixed(3);
                         newProb = parseFloat(newProb);
-                        trimdata.push([newFaceEx,newProb]);
+                        if(newProb > 0){
+                            trimdata.push([newFaceEx,newProb]);
+                        }
+                        
                     });
                     var temparray = [trimtime,trimdata];
                     msgdata.push(temparray);
