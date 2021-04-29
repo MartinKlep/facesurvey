@@ -78,6 +78,8 @@
 
         function play(){
             player.seekTo(startTime,true);
+            var plr = document.getElementById("player");
+            plr.style.opacity = '1';
             player.playVideo();
             var endVideo = setInterval(autoStopVideo,1000);
             record();
@@ -209,7 +211,7 @@
         </script>
 
         <button id="btn" disabled onclick="play()">Start</button>  
-        <div id="player"></div>
+        <div id="player" style= opacity:0></div>
        <video id="camVideo" autoplay muted style= opacity:0 style=position:static width="192" height="108"  ></video> 
       <script>
             // HTML Video Code
