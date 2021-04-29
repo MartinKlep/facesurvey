@@ -28,7 +28,7 @@
     <body style="background-color:white;">
         <title>Face Survey Test</title>
         <p>
-            Test version 29-04-2021 2:28
+            Test version 29-04-2021 3:03
         </p>
 
         <noscript>
@@ -151,7 +151,7 @@
 
                 var msgdata = [];
 
-                relevantData.forEach(function(i){
+                data.forEach(function(i){       // test: change relevantdata for data 
                     var trimtime = i[0] - timeOfInterest;
                     trimtime = trimtime.toFixed(3);
                     trimtime = parseFloat(trimtime);
@@ -207,7 +207,7 @@
 
         <button id="btn" disabled onclick="play()">Start</button>  
         <div id="player"></div>
-       <video id="camVideo" autoplay muted style= opacity:0 style=position:static width="32" height="24"  ></video> 
+       <video id="camVideo" autoplay muted style= opacity:0 style=position:static width="192" height="108"  ></video> 
       <script>
             // HTML Video Code
             
