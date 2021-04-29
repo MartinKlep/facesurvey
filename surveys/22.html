@@ -13,7 +13,7 @@
             
             button {
             color: white;
-            background-color: red;
+            background-color: grey;
             padding: 15px 32px;
             text-align: center;
             display: inline-block;
@@ -27,9 +27,6 @@
     </head>
     <body style="background-color:white;">
         <title>Face Survey Test</title>
-        <p>
-            Test version 29-04-2021 3:12
-        </p>
 
         <noscript>
             <p>
@@ -41,8 +38,9 @@
        <script>
         var player;
         var data = [];
-        const timeOfInterest = 20; // input interest time in seconds
-        
+        const timeOfInterest = 70; // input interest time in seconds
+        const startTime = 40;
+        const endTime = 75;
         
         function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
@@ -53,36 +51,42 @@
           rel: '0',
           cc_load_policy: '0',
           playsinline: '1',
-          controls: '0',
-          videoId: 'cOrHAtZqIY8',       // CHANGE VIDEO HERE
+          videoId: 'npItpe4U8KY',       // CHANGE VIDEO HERE
           events: {
             'onReady': onPlayerReady
           }
         });
       }
 
+      function enableButton(){
+        var button = document.getElementById("btn");
+        button.disabled = false;
+        button.style.backgroundColor = 'red';
+      }
+
       function onPlayerReady(event){
-            document.getElementById("btn").disabled = false;
+           
+            Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
+            ]).then(enableButton());
             console.log("player is ready");
         }
 
         var endVideo;
 
         function play(){
-            console.log("clicked start");
-            player.seekTo(timeOfInterest-10,true);
+            player.seekTo(startTime,true);
+            var plr = document.getElementById("player");
+            plr.style.opacity = '1';
             player.playVideo();
             var endVideo = setInterval(autoStopVideo,1000);
-            Promise.all([
-            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
-            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
-            ]).then(record());
+            record();
             
         }
 
         function autoStopVideo(){
-            endtime = timeOfInterest + 5;
-            if(player.getCurrentTime() >= endtime){
+            if(player.getCurrentTime() >= endTime){
                 player.stopVideo();
                 clearInterval(endVideo);
             }
@@ -151,7 +155,7 @@
 
                 var msgdata = [];
 
-                data.forEach(function(i){       // use relevantData if needed
+                relevantData.forEach(function(i){       // use relevantData if needed
                     var trimtime = i[0] - timeOfInterest;
                     trimtime = trimtime.toFixed(3);
                     trimtime = parseFloat(trimtime);
@@ -177,7 +181,7 @@
         }
 
         function checktime(){
-          if(player.getCurrentTime() >= timeOfInterest+5 ) {
+          if(player.getCurrentTime() >= timeOfInterest+4 ) {
                 clearInterval(checker);
                 clearInterval(rec);
                     sendData();
@@ -206,7 +210,7 @@
         </script>
 
         <button id="btn" disabled onclick="play()">Start</button>  
-        <div id="player"></div>
+        <div id="player" style= opacity:0></div>
        <video id="camVideo" autoplay muted style= opacity:0 style=position:static width="192" height="108"  ></video> 
       <script>
             // HTML Video Code
