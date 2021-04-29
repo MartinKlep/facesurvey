@@ -13,7 +13,7 @@
             
             button {
             color: white;
-            background-color: red;
+            background-color: grey;
             padding: 15px 32px;
             text-align: center;
             display: inline-block;
@@ -61,22 +61,28 @@
         });
       }
 
+      function enableButton(){
+        var button = document.getElementById("btn");
+        button.disabled = false;
+        button.style.backgroundColor = 'red';
+      }
+
       function onPlayerReady(event){
-            document.getElementById("btn").disabled = false;
+           
+            Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
+            ]).then(enableButton());
             console.log("player is ready");
         }
 
         var endVideo;
 
         function play(){
-            console.log("clicked start");
             player.seekTo(timeOfInterest-10,true);
             player.playVideo();
             var endVideo = setInterval(autoStopVideo,1000);
-            Promise.all([
-            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
-            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
-            ]).then(record());
+            record();
             
         }
 
