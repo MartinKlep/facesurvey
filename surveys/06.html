@@ -98,7 +98,7 @@
       
         function record(){
             console.log("recording");
-            rec = setInterval(doStuff,20);
+            rec = setInterval(doStuff,10);
             checker = setInterval(checktime,50); 
         }
 
@@ -182,7 +182,7 @@
         }
 
         function checktime(){
-          if(player.getCurrentTime() >= timeOfInterest+5 ) {
+          if(player.getCurrentTime() >= 4 ) {
                 clearInterval(checker);
                 clearInterval(rec);
                     sendData();
