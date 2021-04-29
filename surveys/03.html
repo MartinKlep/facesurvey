@@ -13,7 +13,7 @@
             
             button {
             color: white;
-            background-color: red;
+            background-color: grey;
             padding: 15px 32px;
             text-align: center;
             display: inline-block;
@@ -27,9 +27,6 @@
     </head>
     <body style="background-color:white;">
         <title>Face Survey Test</title>
-        <p>
-            Test version 29-04-2021 3:12
-        </p>
 
         <noscript>
             <p>
@@ -41,7 +38,7 @@
        <script>
         var player;
         var data = [];
-        const timeOfInterest = 20; // input interest time in seconds
+        const timeOfInterest = 392; // input interest time in seconds
         
         
         function onYouTubeIframeAPIReady() {
@@ -54,34 +51,40 @@
           cc_load_policy: '0',
           playsinline: '1',
           controls: '0',
-          videoId: 'cOrHAtZqIY8',       // CHANGE VIDEO HERE
+          videoId: 'g5SeVxYAZzk',       // CHANGE VIDEO HERE
           events: {
             'onReady': onPlayerReady
           }
         });
       }
 
+      function enableButton(){
+        var button = document.getElementById("btn");
+        button.disabled = false;
+        button.style.backgroundColor = 'red';
+      }
+
       function onPlayerReady(event){
-            document.getElementById("btn").disabled = false;
+           
+            Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
+            ]).then(enableButton());
             console.log("player is ready");
         }
 
         var endVideo;
 
         function play(){
-            console.log("clicked start");
-            player.seekTo(timeOfInterest-10,true);
+            player.seekTo(378,true);
             player.playVideo();
             var endVideo = setInterval(autoStopVideo,1000);
-            Promise.all([
-            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
-            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
-            ]).then(record());
+            record();
             
         }
 
         function autoStopVideo(){
-            endtime = timeOfInterest + 5;
+            endtime = timeOfInterest + 20;
             if(player.getCurrentTime() >= endtime){
                 player.stopVideo();
                 clearInterval(endVideo);
@@ -143,7 +146,7 @@
                 
                 data.forEach(function(item){ 
                     var min = timeOfInterest - 2;
-                    var max = timeOfInterest + 4;
+                    var max = timeOfInterest + 6;
                     if(item[0] >= min && item[0] <= max){
                         relevantData.push(item);
                      }
@@ -151,7 +154,7 @@
 
                 var msgdata = [];
 
-                data.forEach(function(i){       // use relevantData if needed
+                relevantData.forEach(function(i){       // use relevantData if needed
                     var trimtime = i[0] - timeOfInterest;
                     trimtime = trimtime.toFixed(3);
                     trimtime = parseFloat(trimtime);
