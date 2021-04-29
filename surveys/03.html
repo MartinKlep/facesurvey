@@ -39,7 +39,8 @@
         var player;
         var data = [];
         const timeOfInterest = 392; // input interest time in seconds
-        
+        const startTime =378;
+        const endTime = timeOfInterest + 20;
         
         function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
@@ -76,7 +77,7 @@
         var endVideo;
 
         function play(){
-            player.seekTo(378,true);
+            player.seekTo(startTime,true);
             player.playVideo();
             var endVideo = setInterval(autoStopVideo,1000);
             record();
@@ -84,8 +85,7 @@
         }
 
         function autoStopVideo(){
-            endtime = timeOfInterest + 20;
-            if(player.getCurrentTime() >= endtime){
+            if(player.getCurrentTime() >= endTime){
                 player.stopVideo();
                 clearInterval(endVideo);
             }
