@@ -78,7 +78,8 @@
 
         function play(){
             player.seekTo(startTime,true);
-            player.style.opacity = '1';
+            var plr = document.getElementById("player");
+            plr.style.opacity = '1';
             player.playVideo();
             var endVideo = setInterval(autoStopVideo,1000);
             record();
