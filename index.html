@@ -152,7 +152,7 @@
                 var msgdata = [];
 
                 relevantData.forEach(function(i){
-                    var trimtime = i[0];
+                    var trimtime = i[0] - timeOfInterest;
                     trimtime = trimtime.toFixed(3);
                     trimtime = parseFloat(trimtime);
                     var trimdata = [];
