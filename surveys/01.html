@@ -89,6 +89,10 @@
             if(player.getCurrentTime() >= endTime){
                 player.stopVideo();
                 clearInterval(endVideo);
+                var button = document.getElementById("btn");
+                button.style.display = "none";
+                player.style.display = "none";
+                document.getElementById("camVideo").style.display = "none";
             }
         }
 
