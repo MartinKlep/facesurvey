@@ -77,6 +77,8 @@
         var endVideo;
 
         function play(){
+            var button = document.getElementById("btn");
+            button.style.display = "none";
             player.seekTo(startTime,true);
             var plr = document.getElementById("player");
             plr.style.opacity = '1';
@@ -90,6 +92,10 @@
             if(player.getCurrentTime() >= endTime){
                 player.stopVideo();
                 clearInterval(endVideo);
+                var plr = document.getElementById("player");
+                plr.style.display = "none";
+                document.getElementById("camVideo").style.display = "none";
+                window.parent.postMessage("stop","*");
             }
         }
 
