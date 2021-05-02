@@ -163,14 +163,14 @@
 
                     data.forEach(function(i){       // use relevantData if needed
                     var trimtime = i[0] - timeOfInterest;
-                    trimtime = trimtime.toFixed(3);
+                    trimtime = trimtime.toFixed(2);
                     trimtime = parseFloat(trimtime);
                     var trimdata = [];
                     i[1].forEach(function(j){
                         var tempEx = j.expression;
                         var newFaceEx = faceexToNumber(tempEx);
                         var newProb = j.probability;
-                        newProb = newProb.toFixed(3);
+                        newProb = newProb.toFixed(2);
                         newProb = parseFloat(newProb);
                         if(newProb > 0){
                             trimdata.push([newFaceEx,newProb]);
