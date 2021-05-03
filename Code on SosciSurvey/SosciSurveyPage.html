@@ -1,0 +1,69 @@
+<html>
+<!--    
+    Auf SosciSurvey ist hier eine interne Variable "IV01"
+-->
+    <script>
+        var input = document.getElementById("IV01_01");
+        
+        window.addEventListener("message", (event) => {
+            if(event.data == "stop"){
+                var iframe = document.getElementById("framy");
+                iframe.style.display = "none";
+                for (let i = 0, l = questionnaire_elements.length; i < l; i++){
+                    questionnaire_elements[i].style.display = "";
+                }
+                toogle();
+            }
+            else{
+            console.log("Received data from iFrame" + event.data);
+            input.value = event.data;
+            }
+        });
+        </script>
+        
+        <iframe src="https://martinklep.github.io/facesurvey/surveys/01" id="framy" width="100%" height="680" allow="camera" style="border:none;"></iframe>
+
+<!--    
+            Hier zwichen sind die Fragen auf SosciSurvey
+-->
+
+        <script type="text/javascript">
+            <!--
+            
+            
+            
+            
+            
+            
+            let actual_page_id = "01";
+            
+            var optionA = document.getElementById("FF"+actual_page_id +"_01a");  // "Ja"
+            var optionB = document.getElementById("FF"+actual_page_id +"_02a");  // "Nein"
+            var frage1 = document.getElementById("TE"+actual_page_id +"_qst");  // HTML-ID der Texteingabe
+            var frage2 = document.getElementById("FQ"+actual_page_id +"_qst");  // HTML-ID der Texteingabe
+             
+            function toogle() {
+              if (optionA.checked) {
+                frage1.style.display = "";
+                frage2.style.display = "";
+              } else {
+                frage1.style.display = "none";
+                frage2.style.display = "none";
+              }
+            }
+             
+            SoSciTools.attachEvent(optionA, "click", toogle);
+            SoSciTools.attachEvent(optionB, "click", toogle);
+             
+            
+            
+            
+            questionnaire_elements = document.getElementsByClassName("spacing");
+            for (let i = 0, l = questionnaire_elements.length; i < l; i++){
+                questionnaire_elements[i].style.display = "none";
+            }
+            
+            
+            
+            // -->
+            </script>

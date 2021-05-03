@@ -1,0 +1,23 @@
+<html>
+
+<p> Bitte bestätigen sie die Kameraberechtigung für diese Seite! </p>
+
+<video id="camVideo" autoplay muted style=position:static></video> 
+     
+ <script>
+            // HTML Video Code
+            
+         var video = document.getElementById('camVideo');
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+                });
+            }
+</script>
+
+<p> Falls sie die Kameraberechtigung akzeptiert haben und oberhalb ihr Kamerabild nicht erscheint, sollten sie sicher gehen dass ihre Kamera nicht gleichzeitig in einem anderen Programm benutzt wird (Zoom etc.). Sobald sie ihr Kamerabild sehen und Ihr Gesicht etwa mittig ausgerichtet klicken sie auf "Weiter". Versuchen Sie diese Kopfposition für die gesamte Befragung beizubehalten. </p>
+
+<iframe src="https://martinklep.github.io/facesurvey/surveys/preload" id="framy" width="1" height="1"  style="border:none;"></iframe>
+
+</html>
