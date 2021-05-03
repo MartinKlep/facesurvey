@@ -89,6 +89,7 @@
         }
 
         function autoStopVideo(){
+                if(player.getCurrentTime() >= endTime){
                 player.stopVideo();
                 clearInterval(endVideo);
                 var plr = document.getElementById("player");
@@ -96,6 +97,7 @@
                 document.getElementById("camVideo").style.display = "none";
                 window.parent.postMessage("stop","*");
             }
+        }
 
         var checker;
         var rec;
@@ -147,7 +149,6 @@
         }
 
         function sendData(){    // send data to survey
-                autoStopVideo();
                 var target = window.parent;
                 var relevantData = [];
                 
