@@ -36,11 +36,12 @@
         </noscript>
 
        <script>
-        var player;
+       
+       var player;
         var data = [];
         const timeOfInterest = 2; // input interest time in seconds
         const startTime = 0;
-        const endTime = 4;
+        const endTime = 3;
         
         function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
@@ -82,13 +83,12 @@
             var plr = document.getElementById("player");
             plr.style.opacity = '1';
             player.playVideo();
-            var endVideo = setInterval(autoStopVideo,1000);
+            var endVideo = setInterval(autoStopVideo,100);
             record();
             
         }
 
         function autoStopVideo(){
-            if(player.getCurrentTime() >= endTime){
                 player.stopVideo();
                 clearInterval(endVideo);
                 var plr = document.getElementById("player");
@@ -96,7 +96,6 @@
                 document.getElementById("camVideo").style.display = "none";
                 window.parent.postMessage("stop","*");
             }
-        }
 
         var checker;
         var rec;
@@ -148,6 +147,7 @@
         }
 
         function sendData(){    // send data to survey
+                autoStopVideo();
                 var target = window.parent;
                 var relevantData = [];
                 
@@ -181,13 +181,14 @@
                     msgdata.push(temparray);
                 });
                 console.log(msgdata);
+                window.parent.postMessage("stop","*");
                 var message = JSON.stringify(msgdata); 
                 target.postMessage(message,"*");
                 console.log("SENT MESSAGE TO PARENT"); 
         }
 
         function checktime(){
-          if(player.getCurrentTime() >= 3.5 ) {
+          if(player.getCurrentTime() >= endTime) {
                 clearInterval(checker);
                 clearInterval(rec);
                     sendData();
@@ -212,6 +213,8 @@
                 data.push(newData);
             } 
         }  
+        
+        
         
         </script>
 
