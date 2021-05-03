@@ -104,7 +104,7 @@
       
         function record(){
             console.log("recording");
-            rec = setInterval(doStuff,50);
+            rec = setInterval(doStuff,60);
             checker = setInterval(checktime,50); 
         }
 
@@ -173,7 +173,7 @@
                         var newProb = j.probability;
                         newProb = newProb.toFixed(2);
                         newProb = parseFloat(newProb);
-                        if(newProb > 0){
+                        if(newProb > 0.1){
                             trimdata.push([newFaceEx,newProb]);
                         }
                         
