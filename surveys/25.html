@@ -76,6 +76,7 @@
         var endVideo;
 
         function play(){
+            window.parent.postMessage("start","*");
             var button = document.getElementById("btn");
             button.style.display = "none";
             player.seekTo(startTime,true);
