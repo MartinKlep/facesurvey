@@ -18,7 +18,32 @@
             ]).then(console.log("Loaded"));
         }
 
-        window.onload = function(){loadModels()};
+        window.onload = function(){
+            if(faceExpressionNet.isLoaded){
+                console.log("tinyface loaded");
+            }
+            else{
+                console.log("tinyface not loaded");
+            }
+            if(faceExpressionNet.isLoaded){
+                console.log("tinyface loaded");
+            }
+            else{
+                console.log("tinyface not loaded");
+            }
+            loadModels();
+            if(faceExpressionNet.isLoaded){
+                console.log("tinyface loaded");
+            }
+            else{
+                console.log("tinyface not loaded");
+            }
+            if(faceExpressionNet.isLoaded){
+                console.log("tinyface loaded");
+            }
+            else{
+                console.log("tinyface not loaded");
+            }};
         </script>
 
 
