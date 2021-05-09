@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script defer src="face-api.min.js"></script>
+    </head>
+    
+
+      <body>
+        <input type="button" onclick="location.href='https://martinklep.github.io/facesurvey/surveys/test2';" value="Next" />
+      </body>
+        <script>
+        
+        function loadModels(){
+            Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
+            ]).then(console.log("Loaded"));
+        }
+
+        window.onload = function(){loadModels()};
+        </script>
+
+
+</html>
+

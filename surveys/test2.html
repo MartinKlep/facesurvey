@@ -1,0 +1,242 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://www.youtube.com/iframe_api"></script>
+        <script defer src="face-api.min.js"></script>
+        
+        <link rel="stylesheet" href="https://www.konstantinsteinle.de/soscisurvey/css/soscisurvey.css" />
+        <style>
+            
+            p{
+                color: red;
+            }
+            
+            button {
+            color: white;
+            background-color: grey;
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 20px;
+            margin: 4px 2px;
+            cursor: pointer;
+            position: static;
+            }
+
+        </style>
+    </head>
+    <body style="background-color:white;">
+        <title>Face Survey Test</title>
+
+        <noscript>
+            <p>
+                Ihr Browser unterstützt keine scripts oder blockiert sie. Bitte schalten sie alle scriptblocker ab oder wechseln sie den Internetbrowser.
+            </p>
+
+        </noscript>
+
+       <script>
+        var player;
+        var data = [];
+        const timeOfInterest = 10; // input interest time in seconds
+        const startTime = 0;
+        const endTime = 16;
+        
+        function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '443',
+          width: '788.54',
+          iv_load_policy: '3',
+          showinfo: '0',
+          rel: '0',
+          cc_load_policy: '0',
+          playsinline: '1',
+          videoId: 'yi5sVTewmXc',       // CHANGE VIDEO HERE
+          events: {
+            'onReady': onPlayerReady
+          }
+        });
+      }
+
+      function enableButton(){
+        var button = document.getElementById("btn");
+        button.disabled = false;
+        button.style.backgroundColor = 'red';
+      }
+
+      function onPlayerReady(event){
+           /*
+            Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
+            ]).then(enableButton());    */
+            enableButton();
+            console.log("player is ready");
+        }
+
+        var endVideo;
+
+        function play(){
+            window.parent.postMessage("start","*");
+            var button = document.getElementById("btn");
+            button.style.display = "none";
+            player.seekTo(startTime,true);
+            var plr = document.getElementById("player");
+            plr.style.opacity = '1';
+            player.playVideo();
+            var endVideo = setInterval(autoStopVideo,1000);
+            record();
+            
+        }
+
+        function autoStopVideo(){
+            if(player.getCurrentTime() >= endTime){
+                player.stopVideo();
+                clearInterval(endVideo);
+                var plr = document.getElementById("player");
+                plr.style.display = "none";
+                document.getElementById("camVideo").style.display = "none";
+                window.parent.postMessage("stop","*");
+            }
+        }
+
+        var checker;
+        var rec;
+      
+        function record(){
+            console.log("recording");
+            rec = setInterval(doStuff,120);
+            checker = setInterval(checktime,50); 
+        }
+
+        function faceexToNumber(faceex){
+            var number;
+
+            switch (faceex){
+
+                case "neutral":
+                    number = 0;
+                    break;
+
+                case "happy":
+                    number = 1;
+                    break;                    
+                
+                case "sad":
+                    number = 2;
+                    break; 
+
+                case "angry":
+                    number = 3;
+                    break; 
+
+                case "fearful":
+                    number = 4;
+                    break; 
+
+                case "disgusted":
+                    number = 5;
+                    break; 
+
+                case "surprised":
+                    number = 6;
+                    break; 
+
+                default:
+                    console.log("default in switch case faceexToNumber");   // should not happen 
+            }
+
+            return number;
+        }
+
+        function sendData(){    // send data to survey
+                var target = window.parent;
+                var relevantData = [];
+                
+                data.forEach(function(item){ 
+                    var min = timeOfInterest - 2;
+                    var max = timeOfInterest + 4;
+                    if(item[0] >= min && item[0] <= max){
+                        relevantData.push(item);
+                     }
+                });
+
+                var msgdata = [];
+
+                relevantData.forEach(function(i){       // use relevantData if needed
+                    var trimtime = i[0] - timeOfInterest;
+                    trimtime = trimtime.toFixed(2);
+                    trimtime = parseFloat(trimtime);
+                    var trimdata = [];
+                    i[1].forEach(function(j){
+                        var tempEx = j.expression;
+                        var newFaceEx = faceexToNumber(tempEx);
+                        var newProb = j.probability;
+                        newProb = newProb.toFixed(2);
+                        newProb = parseFloat(newProb);
+                        if(newProb >= 0.25){
+                            trimdata.push([newFaceEx,newProb]);
+                        }
+                        
+                    });
+                    var temparray = [trimtime,trimdata];
+                    msgdata.push(temparray);
+                });
+                console.log(msgdata);
+                var message = JSON.stringify(msgdata); 
+                target.postMessage(message,"*");
+                console.log("SENT MESSAGE TO PARENT"); 
+        }
+
+        function checktime(){
+          if(player.getCurrentTime() >= timeOfInterest+4 ) {
+                clearInterval(checker);
+                clearInterval(rec);
+                    sendData();
+                }
+        }   
+
+        
+
+        async function doStuff(){
+            const timestamp = player.getCurrentTime();
+            console.log("doing stuff at " +timestamp + " seconds");     //message for the console
+            
+
+          const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128 });
+          const videoEl = $('#camVideo').get(0);
+            // get detection result from faceapi
+         const result = await faceapi.detectSingleFace(videoEl, options).withFaceExpressions(); 
+            
+            if(result){ // process detection result and save the data
+                const expressionArray = result.expressions.asSortedArray();
+                newData = [timestamp,expressionArray];
+                data.push(newData);
+            } 
+        }  
+        
+        </script>
+
+        <button id="btn" disabled onclick="play()">Start</button>  
+        <div id="player" style= opacity:0></div>
+       <video id="camVideo" autoplay muted style= opacity:0 style=position:static width="192" height="108"  ></video> 
+      <script>
+            // HTML Video Code
+            
+         var video = document.getElementById('camVideo');
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+                });
+            }
+
+        
+
+      </script>
+       
+    </body>
+
+</html>
+
+        
