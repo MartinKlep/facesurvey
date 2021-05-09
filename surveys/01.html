@@ -98,6 +98,8 @@
                 plr.style.display = "none";
                 document.getElementById("camVideo").style.display = "none";
                 window.parent.postMessage("stop","*");
+                faceapi.nets.faceExpressionNet.dispose();
+                faceapi.nets.tinyFaceDetector.dispose();
             }
         }
 
