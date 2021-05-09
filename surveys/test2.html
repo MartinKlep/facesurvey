@@ -96,7 +96,7 @@
             else{
                 console.log("faceExpressionNet not loaded");
             }
-            
+
             console.log("player is ready");
         }
 
@@ -123,6 +123,18 @@
                 plr.style.display = "none";
                 document.getElementById("camVideo").style.display = "none";
                 window.parent.postMessage("stop","*");
+                if(faceapi.nets.tinyFaceDetector.isLoaded){
+                console.log("tinyface loaded");
+            }
+            else{
+                console.log("tinyface not loaded");
+            }
+            if(faceapi.nets.faceExpressionNet.isLoaded){
+                console.log("faceExpressionNet loaded");
+            }
+            else{
+                console.log("faceExpressionNet not loaded");
+            }
             }
         }
 
