@@ -65,12 +65,38 @@
       }
 
       function onPlayerReady(event){
-           /*
+        if(faceapi.nets.tinyFaceDetector.isLoaded){
+                console.log("tinyface loaded");
+            }
+            else{
+                console.log("tinyface not loaded");
+            }
+            if(faceapi.nets.faceExpressionNet.isLoaded){
+                console.log("faceExpressionNet loaded");
+            }
+            else{
+                console.log("faceExpressionNet not loaded");
+            }
+
+           
             Promise.all([
             faceapi.nets.tinyFaceDetector.loadFromUri('/facesurvey/models'),
             faceapi.nets.faceExpressionNet.loadFromUri('/facesurvey/models')
-            ]).then(enableButton());    */
-            enableButton();
+            ]).then(enableButton());    
+
+            if(faceapi.nets.tinyFaceDetector.isLoaded){
+                console.log("tinyface loaded");
+            }
+            else{
+                console.log("tinyface not loaded");
+            }
+            if(faceapi.nets.faceExpressionNet.isLoaded){
+                console.log("faceExpressionNet loaded");
+            }
+            else{
+                console.log("faceExpressionNet not loaded");
+            }
+            
             console.log("player is ready");
         }
 
