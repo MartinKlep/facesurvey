@@ -4,7 +4,6 @@
         <script src="https://www.youtube.com/iframe_api"></script>
         <script defer src="face-api.min.js"></script>
         
-        <link rel="stylesheet" href="https://www.konstantinsteinle.de/soscisurvey/css/soscisurvey.css" />
         <style>
             
             p{
@@ -41,8 +40,8 @@
         var player;
         var data = [];
         const timeOfInterest = 20; // input interest time in seconds
-        const startTime = timeOfInterest-10;
-        const endTime = timeOfInterest + 5;
+        const startTime = 10;
+        const endTime = 25;
         
         function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
@@ -108,7 +107,7 @@
       
         function record(){
             console.log("recording");
-            rec = setInterval(doStuff,120);
+            rec = setInterval(detectFace,120);
             checker = setInterval(checktime,50); 
         }
 
@@ -166,7 +165,7 @@
 
                 var msgdata = [];
 
-                relevantData.forEach(function(i){       // use relevantData if needed
+                relevantData.forEach(function(i){       
                     var trimtime = i[0] - timeOfInterest;
                     trimtime = trimtime.toFixed(2);
                     trimtime = parseFloat(trimtime);
@@ -201,11 +200,10 @@
 
         
 
-        async function doStuff(){
+        async function detectFace(){
             const timestamp = player.getCurrentTime();
             console.log("doing stuff at " +timestamp + " seconds");     //message for the console
             
-
           const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128 });
           const videoEl = $('#camVideo').get(0);
             // get detection result from faceapi
